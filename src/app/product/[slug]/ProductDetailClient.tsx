@@ -262,7 +262,7 @@ export function ProductDetailClient({ product }: ProductDetailProps) {
           >
             {/* Category */}
             <p
-              className="text-[10px] tracking-[0.25em] uppercase text-[#A67C3C] mb-2"
+              className="text-[10px] tracking-[0.25em] uppercase text-[#6b6b6b] mb-2"
               style={{ fontFamily: "var(--font-inter)" }}
             >
               {product.category.name}
@@ -285,8 +285,8 @@ export function ProductDetailClient({ product }: ProductDetailProps) {
                     size={14}
                     className={cn(
                       i <= Math.round(product.avgRating)
-                        ? "fill-[#A67C3C] text-[#A67C3C]"
-                        : "text-[#A67C3C]/25 fill-[#A67C3C]/10"
+                        ? "fill-[#1A1714] text-[#1A1714]"
+                        : "text-[#DDD8D2] fill-[#DDD8D2]"
                     )}
                   />
                 ))}
@@ -412,19 +412,20 @@ export function ProductDetailClient({ product }: ProductDetailProps) {
                     const hasStock = product.variants.some(
                       (v) => v.size === size && v.stockQuantity > 0
                     );
+                    const isSelected = selectedSize === size;
                     return (
                       <button
                         key={size}
                         onClick={() => hasStock && setSelectedSize(size)}
                         disabled={!hasStock}
-                        aria-pressed={selectedSize === size}
+                        aria-pressed={isSelected}
                         className={cn(
-                          "px-5 py-2.5 rounded-sm text-[12px] tracking-wide transition-all border",
-                          selectedSize === size
-                            ? "bg-[#1A1714] text-[#F9F7F4] border-[#1A1714]"
+                          "px-5 py-2.5 text-[12px] tracking-[0.06em] transition-all border",
+                          isSelected
+                            ? "bg-[#1A1714] text-white border-[#1A1714]"
                             : hasStock
                             ? "bg-white text-[#1A1714] border-[#E2DDD7] hover:border-[#1A1714]"
-                            : "bg-[#F4F0EB] text-[#B5AFA8] border-[#E2DDD7] cursor-not-allowed line-through"
+                            : "bg-[#F9F7F4] text-[#C5BFB8] border-[#E2DDD7] cursor-not-allowed line-through"
                         )}
                         style={{ fontFamily: "var(--font-inter)" }}
                       >
@@ -500,13 +501,13 @@ export function ProductDetailClient({ product }: ProductDetailProps) {
                 onClick={() => setIsWishlisted(!isWishlisted)}
                 className={cn(
                   "btn-icon",
-                  isWishlisted && "!bg-[#F4F0EB] !border-[#A67C3C]"
+                  isWishlisted && "!bg-[#F4F0EB] !border-[#1A1714]"
                 )}
                 aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
               >
                 <Heart
                   size={18}
-                  className={cn(isWishlisted ? "fill-[#A67C3C] text-[#A67C3C]" : "text-[#7A746D]")}
+                  className={cn(isWishlisted ? "fill-[#1A1714] text-[#1A1714]" : "text-[#7A746D]")}
                 />
               </button>
             </div>

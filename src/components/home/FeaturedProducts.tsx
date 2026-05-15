@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
-import { ProductGrid } from "@/components/product/ProductGrid";
+import { ProductCard } from "@/components/product/ProductCard";
 import { ScrollReveal } from "@/components/common/ScrollReveal";
 import type { ProductCardData } from "@/types";
 
@@ -12,7 +12,7 @@ async function getFeaturedProducts(): Promise<ProductCardData[]> {
         isFeatured: true,
         slug: { not: "test-product-free" },
       },
-      take: 4,
+      take: 6,
       include: {
         images: { orderBy: { displayOrder: "asc" }, take: 2 },
         variants: { select: { size: true, color: true, stockQuantity: true } },
@@ -50,12 +50,12 @@ async function getFeaturedProducts(): Promise<ProductCardData[]> {
 
 function SkeletonCard() {
   return (
-    <div className="bg-[#EDE8E1] rounded-[2px] overflow-hidden animate-pulse">
-      <div className="aspect-[4/5] bg-[#DDD8D2]" />
-      <div className="p-4 space-y-2.5">
-        <div className="h-2.5 bg-[#DDD8D2] rounded w-1/3" />
-        <div className="h-4 bg-[#DDD8D2] rounded w-3/4" />
-        <div className="h-3 bg-[#DDD8D2] rounded w-1/4" />
+    <div className="min-w-[230px] flex-shrink-0 animate-pulse">
+      <div className="aspect-[3/4] bg-[#EDE8E1]" />
+      <div className="pt-3 space-y-2">
+        <div className="h-2 bg-[#DDD8D2] rounded w-1/3" />
+        <div className="h-3.5 bg-[#DDD8D2] rounded w-3/4" />
+        <div className="h-2.5 bg-[#DDD8D2] rounded w-1/4" />
       </div>
     </div>
   );
@@ -65,54 +65,47 @@ export async function FeaturedProducts() {
   const products = await getFeaturedProducts();
 
   return (
-    <section className="py-20 lg:py-28 bg-[#F4F0EB]">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <section className="py-12 lg:py-16 bg-[#F9F7F4] overflow-hidden">
+      <div className="max-w-[1440px] mx-auto">
         {/* Header */}
         <ScrollReveal
           type="fade-up"
-          className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 lg:mb-16 gap-5"
+          className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-10 lg:mb-12 gap-5 px-8 max-md:px-4"
         >
           <div>
-            <div className="flex items-center gap-4 mb-4">
-              <span className="block w-10 h-px bg-[#A67C3C]" />
-              <span
-                className="text-[11px] tracking-[0.38em] uppercase text-[#A67C3C]"
-                style={{ fontFamily: "var(--font-inter)" }}
-              >
-                Handpicked Favourites
-              </span>
-            </div>
+            <p
+              className="text-[11px] tracking-[0.3em] uppercase text-[#6b6b6b] mb-3"
+              style={{ fontFamily: "var(--font-inter)", fontWeight: 500 }}
+            >
+              Handpicked Favourites
+            </p>
             <h2
               className="text-[#1A1714]"
-              style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
+              style={{ fontFamily: "var(--font-playfair)", fontWeight: 300 }}
             >
               Our Collection
             </h2>
           </div>
           <Link
             href="/shop"
-            className="inline-flex items-center gap-2 text-[13px] text-[#2C4A35] hover:text-[#1A1714] transition-colors border-b border-[#2C4A35]/40 hover:border-[#1A1714] pb-0.5 self-start sm:self-auto"
+            className="inline-flex items-center gap-2 text-[12px] tracking-[0.08em] uppercase text-[#2C4A35] hover:text-[#1A1714] transition-colors border-b border-[#2C4A35]/40 hover:border-[#1A1714] pb-0.5 self-start sm:self-auto"
             style={{ fontFamily: "var(--font-inter)" }}
           >
             View all
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
           </Link>
         </ScrollReveal>
 
-        {/* Grid */}
+        {/* Carousel */}
         {products.length > 0 ? (
-          <ProductGrid products={products} columns={4} />
+          <div className="flex gap-4 overflow-x-auto hide-scrollbar px-8 max-md:px-4 pb-2">
+            {products.map((product) => (
+              <div key={product.id} className="min-w-[230px] max-w-[230px] flex-shrink-0 sm:min-w-[250px] sm:max-w-[250px]">
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+          <div className="flex gap-4 overflow-x-auto hide-scrollbar px-8 max-md:px-4 pb-2">
             {[1, 2, 3, 4].map((i) => (
               <SkeletonCard key={i} />
             ))}

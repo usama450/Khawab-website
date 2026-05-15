@@ -16,7 +16,7 @@ async function main() {
         name: "Bedsheets",
         slug: "bedsheets",
         description: "Premium cotton bedsheets in percale and sateen weaves.",
-        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800&q=85",
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=3840&q=100",
       },
     }),
     prisma.category.upsert({
@@ -26,7 +26,7 @@ async function main() {
         name: "Comforter Sets",
         slug: "comforters",
         description: "Complete comforter and duvet sets for a beautifully dressed bed.",
-        image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&q=85",
+        image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=3840&q=100",
       },
     }),
     prisma.category.upsert({
@@ -36,7 +36,7 @@ async function main() {
         name: "Bath Towels",
         slug: "towels",
         description: "Plush, absorbent cotton bath towels in rich colours.",
-        image: "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=800&q=85",
+        image: "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=3840&q=100",
       },
     }),
     prisma.category.upsert({
@@ -46,7 +46,7 @@ async function main() {
         name: "Gift Bundles",
         slug: "gift-bundles",
         description: "Curated home textile gift sets for every occasion.",
-        image: "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=800&q=85",
+        image: "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=3840&q=100",
       },
     }),
   ]);
@@ -73,8 +73,8 @@ async function main() {
       isOnSale: true,
       images: {
         create: [
-          { imageUrl: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=85", altText: "Luxe Sateen Bedsheet Set in white", displayOrder: 0 },
-          { imageUrl: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900&q=85", altText: "Close up of sateen weave texture", displayOrder: 1 },
+          { imageUrl: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=3840&q=100", altText: "Luxe Sateen Bedsheet Set in white", displayOrder: 0 },
+          { imageUrl: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=3840&q=100", altText: "Close up of sateen weave texture", displayOrder: 1 },
         ],
       },
       variants: {
@@ -109,8 +109,8 @@ async function main() {
       isOnSale: false,
       images: {
         create: [
-          { imageUrl: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=900&q=85", altText: "Heritage Comforter Set on a styled bed", displayOrder: 0 },
-          { imageUrl: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=900&q=85", altText: "Heritage Comforter Set detail view", displayOrder: 1 },
+          { imageUrl: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=3840&q=100", altText: "Heritage Comforter Set on a styled bed", displayOrder: 0 },
+          { imageUrl: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=3840&q=100", altText: "Heritage Comforter Set detail view", displayOrder: 1 },
         ],
       },
       variants: {
@@ -142,8 +142,8 @@ async function main() {
       isOnSale: true,
       images: {
         create: [
-          { imageUrl: "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=900&q=85", altText: "Plush Bath Towel Set folded neatly", displayOrder: 0 },
-          { imageUrl: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=900&q=85", altText: "Bath towels in bathroom setting", displayOrder: 1 },
+          { imageUrl: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=3840&q=100", altText: "Plush bath towels in a clean bathroom", displayOrder: 0 },
+          { imageUrl: "https://images.unsplash.com/photo-1600369671236-e74521d4b6ad?w=3840&q=100", altText: "Folded white bath towels", displayOrder: 1 },
         ],
       },
       variants: {
@@ -176,8 +176,8 @@ async function main() {
       isOnSale: true,
       images: {
         create: [
-          { imageUrl: "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=900&q=85", altText: "Dream Home Gift Bundle packaging", displayOrder: 0 },
-          { imageUrl: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=900&q=85", altText: "Gift bundle contents laid out", displayOrder: 1 },
+          { imageUrl: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=3840&q=100", altText: "Dream Home Gift Bundle beautifully packaged", displayOrder: 0 },
+          { imageUrl: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=3840&q=100", altText: "Gift bundle premium textiles", displayOrder: 1 },
         ],
       },
       variants: {

@@ -17,7 +17,7 @@ const CATEGORY_META: Record<
     title: "Premium Bedsheets",
     description:
       "Shop our collection of premium cotton bedsheets. Percale and sateen weaves in sizes from Twin to California King.",
-    image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1400&q=85",
+    image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=3840&q=100",
     heroTitle: "Bedsheets",
     heroSub: "Thread counts from 400–1000. Percale, sateen, and beyond.",
   },
@@ -25,7 +25,7 @@ const CATEGORY_META: Record<
     title: "Comforter Sets",
     description:
       "Complete comforter and duvet sets for a beautifully dressed bed. Premium fills and covers.",
-    image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1400&q=85",
+    image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=3840&q=100",
     heroTitle: "Comforter Sets",
     heroSub: "Complete bed-in-a-bag sets that dress your room instantly.",
   },
@@ -33,7 +33,7 @@ const CATEGORY_META: Record<
     title: "Bath Towels",
     description:
       "Plush, absorbent cotton bath towels and sets in a rich spectrum of colours.",
-    image: "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=1400&q=85",
+    image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=3840&q=100",
     heroTitle: "Bath Towels",
     heroSub: "Plush and absorbent. Because you deserve the best after every shower.",
   },
@@ -41,7 +41,7 @@ const CATEGORY_META: Record<
     title: "Gift Bundles",
     description:
       "Curated home textile gift sets. Perfect for weddings, housewarmings, and special occasions.",
-    image: "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=1400&q=85",
+    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=3840&q=100",
     heroTitle: "Gift Bundles",
     heroSub: "The perfect gift for any home — beautifully packaged and ready to give.",
   },
@@ -145,6 +145,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           src={meta.image}
           alt={meta.heroTitle}
           fill
+          quality={100}
           className="object-cover"
           priority
         />

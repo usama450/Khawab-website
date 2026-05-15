@@ -4,70 +4,52 @@ import { ScrollReveal } from "@/components/common/ScrollReveal";
 
 export function NewsletterSection() {
   return (
-    <section className="py-20 lg:py-24 bg-[#1A2B20] relative overflow-hidden">
-      {/* Decorative large "K" */}
-      <div
-        className="absolute right-0 top-1/2 -translate-y-1/2 select-none pointer-events-none leading-none"
-        style={{
-          fontFamily: "var(--font-playfair)",
-          fontSize: "clamp(16rem, 30vw, 26rem)",
-          color: "rgba(249,247,244,0.04)",
-        }}
-        aria-hidden="true"
-      >
-        K
-      </div>
-
-      <div className="relative max-w-2xl mx-auto px-6 sm:px-8 text-center">
+    <section className="py-12 lg:py-16 bg-[#F5F1EA]">
+      <div className="max-w-[420px] mx-auto px-6 sm:px-4 text-center">
         <ScrollReveal type="fade-up">
           {/* Eyebrow */}
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="block w-10 h-px bg-[#A67C3C]/50" />
-            <span
-              className="text-[11px] tracking-[0.38em] uppercase"
-              style={{ fontFamily: "var(--font-inter)", color: "#A67C3C", fontWeight: 500 }}
-            >
-              Join the Khwab Family
-            </span>
-            <span className="block w-10 h-px bg-[#A67C3C]/50" />
-          </div>
+          <p
+            className="text-[11px] tracking-[0.3em] uppercase text-[#7A746D] mb-4"
+            style={{ fontFamily: "var(--font-inter)", fontWeight: 500 }}
+          >
+            Stay in the Loop
+          </p>
 
           {/* Heading */}
           <h2
-            className="text-[#F9F7F4] mb-4"
-            style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
+            className="text-[#1A1714] mb-6 leading-tight"
+            style={{
+              fontFamily: "var(--font-playfair)",
+              fontSize: "clamp(1.6rem, 3vw, 2.2rem)",
+              fontWeight: 300,
+            }}
           >
             Get 10% Off Your First Order
           </h2>
 
           {/* Body */}
           <p
-            className="mb-9 leading-relaxed max-w-md mx-auto"
+            className="mb-9 leading-relaxed max-w-sm mx-auto"
             style={{
               fontFamily: "var(--font-inter)",
               fontWeight: 300,
-              color: "rgba(249,247,244,0.6)",
+              color: "#7A746D",
+              fontSize: "14px",
             }}
           >
-            Subscribe for exclusive offers, new arrivals, and home styling
-            inspiration.
+            Subscribe for exclusive offers, new arrivals, and home styling inspiration.
           </p>
 
           {/* Form */}
-          <div className="max-w-sm mx-auto">
-            <NewsletterForm darkMode />
-          </div>
+          <NewsletterForm />
 
           {/* Fine print */}
           <p
-            className="mt-5 text-[12px]"
-            style={{ fontFamily: "var(--font-inter)", color: "rgba(249,247,244,0.4)" }}
+            className="mt-4 text-[11px] text-[#B5AFA8]"
+            style={{ fontFamily: "var(--font-inter)" }}
           >
             By subscribing you agree to our{" "}
-            <Link
-              href="/privacy"
-              className="underline hover:text-[#F9F7F4] transition-colors"
-            >
+            <Link href="/privacy" className="underline hover:text-[#7A746D] transition-colors">
               Privacy Policy
             </Link>
             . Unsubscribe anytime.

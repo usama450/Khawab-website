@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, ShoppingBag, Star } from "lucide-react";
+import { Heart, ShoppingBag } from "lucide-react";
 import { cn, formatPrice, getDiscountPercentage } from "@/lib/utils";
 import { useCartStore } from "@/store/cart";
 import { toast } from "@/components/common/Toaster";
@@ -27,7 +27,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
     : 0;
   const defaultVariant = product.variants.find((v) => v.stockQuantity > 0);
   const isOutOfStock = product.variants.every((v) => v.stockQuantity === 0);
-  const avgRating = product.avgRating ?? 0;
+  const hasHoverImage = product.images.length > 1;
 
   const handleQuickAdd = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -65,19 +65,34 @@ export function ProductCard({ product, className }: ProductCardProps) {
         href={`/product/${product.slug}`}
         className="block relative aspect-[3/4] overflow-hidden bg-[#EDE8E1]"
       >
-        {/* Product image */}
+        {/* Product image — both pre-rendered, CSS opacity swap for instant crisp hover */}
         {primaryImage ? (
-          <Image
-            src={
-              isHovered && hoverImage !== primaryImage
-                ? hoverImage.imageUrl
-                : primaryImage.imageUrl
-            }
-            alt={primaryImage.altText ?? product.name}
-            fill
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          />
+          <>
+            <Image
+              src={primaryImage.imageUrl}
+              alt={primaryImage.altText ?? product.name}
+              fill
+              className={cn(
+                "object-cover transition-all duration-500 ease-out group-hover:scale-[1.04]",
+                isHovered && hasHoverImage ? "opacity-0" : "opacity-100"
+              )}
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              quality={90}
+            />
+            {hasHoverImage && (
+              <Image
+                src={hoverImage.imageUrl}
+                alt={primaryImage.altText ?? product.name}
+                fill
+                className={cn(
+                  "object-cover transition-all duration-500 ease-out group-hover:scale-[1.04]",
+                  isHovered ? "opacity-100" : "opacity-0"
+                )}
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                quality={90}
+              />
+            )}
+          </>
         ) : (
           <div className="absolute inset-0 bg-[#EDE8E1] flex items-center justify-center">
             <ShoppingBag size={40} className="text-[#B5AFA8]" />
@@ -132,7 +147,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
               size={14}
               className={
                 isWishlisted
-                  ? "fill-[#A67C3C] text-[#A67C3C]"
+                  ? "fill-[#1A1714] text-[#1A1714]"
                   : "text-[#5A554F]"
               }
             />
@@ -193,28 +208,6 @@ export function ProductCard({ product, className }: ProductCardProps) {
             </span>
           )}
 
-          {/* Stars */}
-          {avgRating > 0 && (
-            <div className="flex items-center gap-0.5 ml-auto">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star
-                  key={i}
-                  size={9}
-                  className={cn(
-                    i <= Math.round(avgRating)
-                      ? "fill-[#A67C3C] text-[#A67C3C]"
-                      : "fill-[#E2DDD7] text-[#E2DDD7]"
-                  )}
-                />
-              ))}
-              <span
-                className="text-[9px] text-[#B5AFA8] ml-0.5"
-                style={{ fontFamily: "var(--font-inter)" }}
-              >
-                ({product._count?.reviews ?? 0})
-              </span>
-            </div>
-          )}
         </div>
       </div>
     </article>

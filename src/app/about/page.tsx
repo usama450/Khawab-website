@@ -15,7 +15,7 @@ export default function AboutPage() {
       {/* Dark hero section */}
       <div className="bg-[#050507] min-h-[60vh] flex items-center relative overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=2400&q=85"
+          src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=3840&q=100"
           alt="Premium home textiles"
           fill
           className="object-cover"
@@ -124,7 +124,7 @@ export default function AboutPage() {
           <div className="mb-16">
             <div className="relative w-full aspect-[16/7] overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1600&q=85"
+                src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=3840&q=100"
                 alt="Premium fabric texture — every thread crafted with care"
                 fill
                 className="object-cover"

@@ -1,79 +1,43 @@
 import Link from "next/link";
 import { Star } from "lucide-react";
-import { ScrollReveal } from "@/components/common/ScrollReveal";
 
 export function Testimonials() {
   return (
-    <section className="py-20 lg:py-28 bg-[#1A2B20]">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+    <section className="py-12 lg:py-16 bg-white">
+      <div className="max-w-xl mx-auto px-6 text-center">
+        <p
+          className="text-[11px] tracking-[0.3em] uppercase text-[#6b6b6b] mb-4"
+          style={{ fontFamily: "var(--font-inter)", fontWeight: 400 }}
+        >
+          Customer Stories
+        </p>
+        <h2
+          className="text-[#1A1714] mb-8"
+          style={{ fontFamily: "var(--font-playfair)", fontWeight: 300, fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}
+        >
+          What Our Customers Say
+        </h2>
 
-        {/* Section heading */}
-        <ScrollReveal type="fade-up" className="text-center mb-14">
-          <div className="flex items-center justify-center gap-4 mb-5">
-            <span className="block w-10 h-px bg-[#F9F7F4]/20" />
-            <span
-              className="text-[11px] tracking-[0.38em] uppercase"
-              style={{ fontFamily: "var(--font-inter)", color: "#A67C3C", fontWeight: 500 }}
-            >
-              Customer Stories
-            </span>
-            <span className="block w-10 h-px bg-[#F9F7F4]/20" />
-          </div>
-          <h2
-            className="text-[#F9F7F4]"
-            style={{ fontFamily: "var(--font-playfair)", fontWeight: 600 }}
-          >
-            Customer Stories
-          </h2>
-        </ScrollReveal>
+        <div className="flex items-center justify-center gap-1 mb-6">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <Star key={i} size={16} className="fill-[#1A1714] text-[#1A1714]" />
+          ))}
+        </div>
 
-        {/* Coming soon card */}
-        <ScrollReveal type="fade-up">
-          <div
-            className="border border-[#F9F7F4]/10 px-12 py-16 max-w-2xl mx-auto text-center"
-            style={{ background: "rgba(249,247,244,0.04)" }}
-          >
-            {/* Empty star row */}
-            <div className="flex items-center justify-center gap-1.5 mb-8">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star
-                  key={i}
-                  size={18}
-                  className="text-[#A67C3C]"
-                />
-              ))}
-            </div>
+        <p
+          className="mb-8 leading-relaxed"
+          style={{ fontFamily: "var(--font-inter)", fontWeight: 300, color: "#7A746D", fontSize: "14px" }}
+        >
+          We&rsquo;re welcoming our first Khwab family. Be among the first to share your experience.
+        </p>
 
-            {/* Heading */}
-            <h3
-              className="text-2xl text-[#F9F7F4] mb-5"
-              style={{ fontFamily: "var(--font-playfair)", fontWeight: 500 }}
-            >
-              Customer Stories Coming Soon
-            </h3>
-
-            {/* Body */}
-            <p
-              className="mb-10 leading-relaxed max-w-sm mx-auto"
-              style={{
-                fontFamily: "var(--font-inter)",
-                fontWeight: 300,
-                color: "rgba(249,247,244,0.6)",
-              }}
-            >
-              We&rsquo;re welcoming our first Khwab family. Be among the first
-              to share your experience.
-            </p>
-
-            {/* CTA */}
-            <Link
-              href="/shop"
-              className="btn-gold-shimmer"
-            >
-              Shop Now
-            </Link>
-          </div>
-        </ScrollReveal>
+        <Link
+          href="/shop"
+          className="text-[11px] tracking-[0.2em] uppercase text-[#1A1714] border-b border-[#1A1714]/30 pb-0.5 hover:border-[#1A1714] transition-colors"
+          style={{ fontFamily: "var(--font-inter)" }}
+        >
+          Shop Now
+        </Link>
       </div>
     </section>
   );

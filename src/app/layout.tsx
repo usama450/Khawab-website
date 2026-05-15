@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { DM_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -9,10 +9,10 @@ import { Providers } from "@/components/common/Providers";
 import { CookieBanner } from "@/components/common/CookieBanner";
 import { Analytics } from "@/components/common/Analytics";
 
-const playfair = Playfair_Display({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-playfair-var",
-  weight: ["400", "700"],
+  weight: ["300", "400", "500", "600"],
   display: "swap",
 });
 
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
+    <html lang="en" className={`${dmSans.variable} ${inter.variable}`}>
       <body className="bg-[#F9F7F4]">
         <Providers>
           <a
