@@ -57,16 +57,15 @@ export async function POST(req: NextRequest) {
       metadata: {
         userId: session?.user?.id ?? "guest",
         couponCode: couponCode ?? "",
+        // Strip image URLs — they bloat the value past Stripe's 500-char limit
         cartItems: JSON.stringify(items.map((i) => ({
           productId: i.productId,
           variantId: i.variantId,
-          quantity: i.quantity,
+          qty: i.quantity,
           price: i.price,
-          name: i.name,
-          image: i.image,
-          size: i.size,
-          color: i.color,
-        }))),
+          size: i.size ?? "",
+          color: i.color ?? "",
+        }))).slice(0, 499),
       },
       success_url: `${process.env.NEXTAUTH_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXTAUTH_URL}/cart`,
@@ -74,8 +73,9 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ url: checkoutSession.url });
   } catch (error) {
-    console.error("POST /api/checkout error:", error);
-    return NextResponse.json({ error: "Failed to create checkout session" }, { status: 500 });
+    const msg = error instanceof Error ? error.message : String(error);
+    console.error("POST /api/checkout error:", msg);
+    return NextResponse.json({ error: "Failed to create checkout session", detail: msg }, { status: 500 });
   }
 }
 
