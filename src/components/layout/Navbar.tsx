@@ -228,13 +228,13 @@ export function Navbar() {
               {/* Cart */}
               <button
                 onClick={openCart}
-                className="relative p-2 text-[#1A1714]/55 hover:text-[#1A1714] transition-colors"
+                className="relative p-2 text-[#1A1714] hover:text-[#2C4A35] transition-colors"
                 aria-label={`Cart (${itemCount} items)`}
               >
-                <ShoppingBag size={18} strokeWidth={1.5} />
-                {itemCount > 0 && (
+                <ShoppingBag size={20} strokeWidth={1.5} />
+                {mounted && itemCount > 0 && (
                   <span
-                    className="absolute top-1 right-1 min-w-[15px] h-[15px] bg-[#2C4A35] text-white text-[9px] font-medium rounded-full flex items-center justify-center px-0.5 leading-none"
+                    className="absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] bg-[#2C4A35] text-white text-[9px] font-semibold rounded-full flex items-center justify-center px-1 leading-none"
                     style={{ fontFamily: "var(--font-inter)" }}
                   >
                     {itemCount > 99 ? "99+" : itemCount}

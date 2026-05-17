@@ -1,67 +1,95 @@
 import Link from "next/link";
 import Image from "next/image";
 
-const panels = [
-  {
-    href: "/shop/bedsheets",
-    heading: "Bedroom Dreams",
-    sub: "Shop Bedsheets",
-    image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=3840&q=100",
-    alt: "Luxurious bedsheets",
-  },
-  {
-    href: "/shop/comforters",
-    heading: "Cloud-Like Comfort",
-    sub: "Shop Comforters",
-    image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=3840&q=100",
-    alt: "Premium comforters",
-  },
-  {
-    href: "/shop/towels",
-    heading: "Bath Luxury",
-    sub: "Shop Towels",
-    image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=3840&q=100",
-    alt: "Plush bath towels",
-  },
-];
-
 export function HeroSection() {
   return (
-    <section className="flex h-[65vh] min-h-[420px] max-md:flex-col max-md:h-auto">
-      {panels.map((panel) => (
-        <Link
-          key={panel.href}
-          href={panel.href}
-          className="relative flex-1 overflow-hidden group max-md:h-[56vw] max-md:min-h-[220px]"
+    <section className="relative h-[92vh] min-h-[560px] overflow-hidden">
+      {/* Full-bleed lifestyle image */}
+      <Image
+        src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=3840&q=100"
+        alt="Khwab luxury home textiles"
+        fill
+        priority
+        quality={100}
+        className="object-cover object-center"
+        sizes="100vw"
+      />
+
+      {/* Layered gradient — darker at bottom for text contrast */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/65" />
+
+      {/* Content — centre-bottom aligned */}
+      <div className="absolute inset-0 flex flex-col items-center justify-end pb-16 md:pb-20 px-6 text-center">
+        {/* Eyebrow */}
+        <p
+          className="text-[11px] tracking-[0.4em] uppercase text-white/55 mb-5"
+          style={{ fontFamily: "var(--font-inter)", fontWeight: 400 }}
         >
-          <Image
-            src={panel.image}
-            alt={panel.alt}
-            fill
-            priority
-            quality={100}
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-            sizes="(max-width: 768px) 100vw, 33vw"
-          />
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-          {/* Text */}
-          <div className="absolute bottom-10 left-0 right-0 px-6 text-center">
-            <h2
-              className="text-white font-light text-[32px] md:text-[38px] leading-tight mb-5"
-              style={{ fontFamily: "var(--font-playfair)", fontWeight: 300 }}
-            >
-              {panel.heading}
-            </h2>
-            <span
-              className="inline-block text-[10px] tracking-[0.22em] uppercase text-white border-b border-white/50 pb-0.5 transition-all duration-300 group-hover:border-white"
+          Canadian Made · Pakistani Heritage
+        </p>
+
+        {/* Main headline */}
+        <h1
+          className="text-white leading-[1.1] mb-6 max-w-3xl"
+          style={{
+            fontFamily: "var(--font-playfair)",
+            fontSize: "clamp(2.4rem, 6vw, 5rem)",
+            fontWeight: 300,
+            letterSpacing: "0.01em",
+          }}
+        >
+          Sleep in Luxury.<br className="hidden sm:block" /> Live in Comfort.
+        </h1>
+
+        {/* Sub-copy */}
+        <p
+          className="text-white/60 mb-10 max-w-md"
+          style={{
+            fontFamily: "var(--font-inter)",
+            fontSize: "clamp(14px, 1.6vw, 16px)",
+            fontWeight: 300,
+            lineHeight: 1.75,
+          }}
+        >
+          Premium bedsheets, comforters and towels — crafted for the modern Canadian home.
+        </p>
+
+        {/* CTA buttons */}
+        <div className="flex items-center gap-4 flex-wrap justify-center">
+          <Link
+            href="/shop"
+            className="px-8 py-3.5 bg-white text-[#1A1714] text-[12px] tracking-[0.2em] uppercase transition-all duration-300 hover:bg-[#F4F0EB]"
+            style={{ fontFamily: "var(--font-inter)", fontWeight: 500 }}
+          >
+            Shop Collection
+          </Link>
+          <Link
+            href="/about"
+            className="px-8 py-3.5 border border-white/60 text-white text-[12px] tracking-[0.2em] uppercase transition-all duration-300 hover:border-white hover:bg-white/10"
+            style={{ fontFamily: "var(--font-inter)", fontWeight: 400 }}
+          >
+            Our Story
+          </Link>
+        </div>
+
+        {/* Category quick-links */}
+        <div className="flex items-center gap-6 mt-10">
+          {[
+            { label: "Bedsheets", href: "/shop/bedsheets" },
+            { label: "Comforters", href: "/shop/comforters" },
+            { label: "Towels", href: "/shop/towels" },
+          ].map((cat) => (
+            <Link
+              key={cat.href}
+              href={cat.href}
+              className="text-[11px] tracking-[0.18em] uppercase text-white/50 hover:text-white/90 transition-colors"
               style={{ fontFamily: "var(--font-inter)" }}
             >
-              {panel.sub}
-            </span>
-          </div>
-        </Link>
-      ))}
+              {cat.label}
+            </Link>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

@@ -44,11 +44,12 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       {/* Panel */}
       <div
         className={`fixed top-0 right-0 bottom-0 z-50 w-[85vw] max-w-[340px] bg-white shadow-2xl flex flex-col transition-transform duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isOpen ? "translate-x-0" : "translate-x-full"
+          isOpen ? "translate-x-0 visible" : "translate-x-full invisible"
         }`}
         role="dialog"
         aria-modal="true"
         aria-label="Navigation menu"
+        aria-hidden={!isOpen}
       >
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-[#E2DDD7]">
