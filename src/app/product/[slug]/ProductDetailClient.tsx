@@ -276,7 +276,8 @@ export function ProductDetailClient({ product }: ProductDetailProps) {
               {product.name}
             </h1>
 
-            {/* Rating */}
+            {/* Rating — only show when 5+ reviews exist */}
+            {product._count.reviews >= 5 && (
             <div className="flex items-center gap-2 mb-4">
               <div className="flex items-center gap-0.5">
                 {[1, 2, 3, 4, 5].map((i) => (
@@ -295,11 +296,10 @@ export function ProductDetailClient({ product }: ProductDetailProps) {
                 className="text-sm text-[#7A746D]"
                 style={{ fontFamily: "var(--font-inter)" }}
               >
-                {product._count.reviews > 0
-                  ? `${product.avgRating.toFixed(1)} (${product._count.reviews} ${product._count.reviews === 1 ? "review" : "reviews"})`
-                  : "No reviews yet"}
+                {product.avgRating.toFixed(1)} ({product._count.reviews} reviews)
               </span>
             </div>
+            )}
 
             {/* Price */}
             <div className="flex items-center gap-3 mb-6">
@@ -625,32 +625,17 @@ export function ProductDetailClient({ product }: ProductDetailProps) {
           </div>
         </div>
 
-        {/* Reviews */}
+        {/* Reviews — only shown when 5+ reviews exist */}
+        {product._count.reviews >= 5 && (
         <div className="mt-8 pt-8 border-t border-[#E2DDD7]">
           <h2
             className="text-[#1A1714] text-xl font-semibold mb-6"
             style={{ fontFamily: "var(--font-playfair)" }}
           >
-            Customer Reviews
-            {product._count.reviews > 0 && ` (${product._count.reviews})`}
+            Customer Reviews ({product._count.reviews})
           </h2>
 
-          {product.reviews.length === 0 ? (
-            <div className="text-center py-12">
-              <p
-                className="text-[#7A746D] mb-4"
-                style={{ fontFamily: "var(--font-inter)" }}
-              >
-                Be the first to review this product
-              </p>
-              <button
-                className="px-6 py-3 border border-[#2C4A35] text-[#2C4A35] text-sm tracking-[0.1em] uppercase rounded-sm hover:bg-[#2C4A35]/5 transition-all"
-                style={{ fontFamily: "var(--font-inter)" }}
-              >
-                Write a Review
-              </button>
-            </div>
-          ) : (
+          {(
             <div className="space-y-4">
               {product.reviews.slice(0, 5).map((review) => (
                 <div
@@ -709,6 +694,7 @@ export function ProductDetailClient({ product }: ProductDetailProps) {
             </div>
           )}
         </div>
+        )}
       </div>
 
       {/* Mobile sticky CTA */}

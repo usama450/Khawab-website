@@ -4,10 +4,16 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import { ShoppingBag, Search, Menu, ChevronDown, User, Heart } from "lucide-react";
+import { ShoppingBag, Search, Menu, ChevronDown, User, Heart, Truck, RotateCcw, Leaf } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import { MobileMenu } from "./MobileMenu";
 import { SearchModal } from "./SearchModal";
+
+const announcements = [
+  { icon: Truck, text: "Free shipping on orders over $125 across Canada" },
+  { icon: RotateCcw, text: "Free 30-day returns on all unwashed items" },
+  { icon: Leaf, text: "Canadian-made with 25 years of textile expertise" },
+];
 
 const navLinks = [
   { label: "Shop All", href: "/shop" },
@@ -44,6 +50,7 @@ export function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [announcementIdx, setAnnouncementIdx] = useState(0);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   const { data: session } = useSession();
@@ -53,6 +60,13 @@ export function Navbar() {
   const isHeroPage = heroPages.includes(pathname);
 
   useEffect(() => { setMounted(true); }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setAnnouncementIdx((i) => (i + 1) % announcements.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -77,12 +91,31 @@ export function Navbar() {
           isScrolled ? "shadow-[0_1px_0_#E2DDD7]" : ""
         }`}
       >
-        {/* Announcement bar */}
+        {/* Announcement bar — rotating messages */}
         <div
-          className="text-center py-2.5 text-[11px] tracking-[0.2em] uppercase bg-[#1A2B20] text-[#F9F7F4]/70"
-          style={{ fontFamily: "var(--font-inter)", fontWeight: 400 }}
+          className="text-center py-2.5 bg-[#1A2B20] overflow-hidden"
+          aria-live="polite"
+          aria-atomic="true"
         >
-          Free shipping on orders over $125 across Canada
+          {announcements.map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={i}
+                className="flex items-center justify-center gap-2 transition-all duration-500"
+                style={{
+                  display: i === announcementIdx ? "flex" : "none",
+                  fontFamily: "var(--font-inter)",
+                  fontWeight: 400,
+                }}
+              >
+                <Icon size={12} className="text-[#F9F7F4]/50 shrink-0" />
+                <span className="text-[11px] tracking-[0.2em] uppercase text-[#F9F7F4]/70">
+                  {item.text}
+                </span>
+              </div>
+            );
+          })}
         </div>
 
         {/* Main bar: Search | Logo | Icons */}

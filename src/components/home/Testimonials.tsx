@@ -1,43 +1,49 @@
-import Link from "next/link";
-import { Star } from "lucide-react";
-
 export function Testimonials() {
-  return (
-    <section className="py-12 lg:py-16 bg-white">
-      <div className="max-w-xl mx-auto px-6 text-center">
-        <p
-          className="text-[11px] tracking-[0.3em] uppercase text-[#6b6b6b] mb-4"
-          style={{ fontFamily: "var(--font-inter)", fontWeight: 400 }}
-        >
-          Customer Stories
-        </p>
-        <h2
-          className="text-[#1A1714] mb-8"
-          style={{ fontFamily: "var(--font-playfair)", fontWeight: 300, fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}
-        >
-          What Our Customers Say
-        </h2>
+  const stats = [
+    { value: "25+", label: "Years of Craft" },
+    { value: "100%", label: "Canadian Made" },
+    { value: "500TC", label: "Premium Thread Count" },
+    { value: "Free", label: "Shipping Over $125" },
+  ];
 
-        <div className="flex items-center justify-center gap-1 mb-6">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <Star key={i} size={16} className="fill-[#1A1714] text-[#1A1714]" />
+  return (
+    <section className="py-14 lg:py-20 bg-[#1A2B20]">
+      <div className="max-w-[1440px] mx-auto px-8 max-md:px-6">
+        {/* Eyebrow */}
+        <p
+          className="text-center text-[11px] tracking-[0.3em] uppercase text-white/40 mb-10"
+          style={{ fontFamily: "var(--font-inter)", fontWeight: 500 }}
+        >
+          Why Khwab
+        </p>
+
+        {/* Stats grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10">
+          {stats.map(({ value, label }) => (
+            <div
+              key={label}
+              className="bg-[#1A2B20] flex flex-col items-center justify-center py-10 px-6 text-center"
+            >
+              <span
+                className="text-white mb-2"
+                style={{
+                  fontFamily: "var(--font-playfair)",
+                  fontSize: "clamp(2rem, 3.5vw, 3rem)",
+                  fontWeight: 300,
+                  letterSpacing: "0.02em",
+                }}
+              >
+                {value}
+              </span>
+              <span
+                className="text-[11px] tracking-[0.2em] uppercase text-white/45"
+                style={{ fontFamily: "var(--font-inter)", fontWeight: 400 }}
+              >
+                {label}
+              </span>
+            </div>
           ))}
         </div>
-
-        <p
-          className="mb-8 leading-relaxed"
-          style={{ fontFamily: "var(--font-inter)", fontWeight: 300, color: "#7A746D", fontSize: "14px" }}
-        >
-          We&rsquo;re welcoming our first Khwab family. Be among the first to share your experience.
-        </p>
-
-        <Link
-          href="/shop"
-          className="text-[11px] tracking-[0.2em] uppercase text-[#1A1714] border-b border-[#1A1714]/30 pb-0.5 hover:border-[#1A1714] transition-colors"
-          style={{ fontFamily: "var(--font-inter)" }}
-        >
-          Shop Now
-        </Link>
       </div>
     </section>
   );
