@@ -65,12 +65,12 @@ export async function FeaturedProducts() {
   const products = await getFeaturedProducts();
 
   return (
-    <section className="py-12 lg:py-16 bg-[#F9F7F4] overflow-hidden">
+    <section className="py-10 sm:py-12 lg:py-16 bg-[#F9F7F4] overflow-hidden">
       <div className="max-w-[1440px] mx-auto">
         {/* Header */}
         <ScrollReveal
           type="fade-up"
-          className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-10 lg:mb-12 gap-5 px-8 max-md:px-4"
+          className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-8 lg:mb-12 gap-4 px-4 sm:px-8"
         >
           <div>
             <p
@@ -81,7 +81,7 @@ export async function FeaturedProducts() {
             </p>
             <h2
               className="text-[#1A1714]"
-              style={{ fontFamily: "var(--font-playfair)", fontWeight: 300 }}
+              style={{ fontFamily: "var(--font-playfair)", fontWeight: 300, fontSize: "clamp(1.6rem, 4vw, 2.4rem)" }}
             >
               Our Collection
             </h2>
@@ -97,15 +97,15 @@ export async function FeaturedProducts() {
 
         {/* Carousel */}
         {products.length > 0 ? (
-          <div className="flex gap-4 overflow-x-auto hide-scrollbar px-8 max-md:px-4 pb-2">
+          <div className="flex gap-3 sm:gap-4 overflow-x-auto hide-scrollbar px-4 sm:px-8 pb-2">
             {products.map((product) => (
-              <div key={product.id} className="min-w-[230px] max-w-[230px] flex-shrink-0 sm:min-w-[250px] sm:max-w-[250px]">
+              <div key={product.id} className="min-w-[160px] max-w-[160px] flex-shrink-0 sm:min-w-[230px] sm:max-w-[230px] lg:min-w-[250px] lg:max-w-[250px]">
                 <ProductCard product={product} />
               </div>
             ))}
           </div>
         ) : (
-          <div className="flex gap-4 overflow-x-auto hide-scrollbar px-8 max-md:px-4 pb-2">
+          <div className="flex gap-3 sm:gap-4 overflow-x-auto hide-scrollbar px-4 sm:px-8 pb-2">
             {[1, 2, 3, 4].map((i) => (
               <SkeletonCard key={i} />
             ))}

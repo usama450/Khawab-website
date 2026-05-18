@@ -7,8 +7,8 @@ export function Testimonials() {
   ];
 
   return (
-    <section className="py-14 lg:py-20 bg-[#1A2B20]">
-      <div className="max-w-[1440px] mx-auto px-8 max-md:px-6">
+    <section className="py-10 sm:py-14 lg:py-20 bg-[#1A2B20]">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
         {/* Eyebrow */}
         <p
           className="text-center text-[11px] tracking-[0.3em] uppercase text-white/40 mb-10"
@@ -22,7 +22,7 @@ export function Testimonials() {
           {stats.map(({ value, label }) => (
             <div
               key={label}
-              className="bg-[#1A2B20] flex flex-col items-center justify-center py-10 px-6 text-center"
+              className="bg-[#1A2B20] flex flex-col items-center justify-center py-8 sm:py-10 px-4 sm:px-6 text-center"
             >
               <span
                 className="text-white mb-2"

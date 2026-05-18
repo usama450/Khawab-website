@@ -26,7 +26,7 @@ export function HeroSection() {
         {/* Single headline */}
         <h1
           className="text-white leading-[1.15] sm:leading-[1.1] mb-8 sm:mb-10 max-w-2xl text-[2rem] sm:text-[2.8rem] md:text-[3.8rem] lg:text-[4.8rem]"
-          style={{ fontFamily: "var(--font-playfair)", fontWeight: 300, letterSpacing: "0.01em" }}
+          style={{ fontFamily: "var(--font-playfair)", fontWeight: 300, letterSpacing: "0.01em", fontSize: "clamp(2rem, 7vw, 4.8rem)" }}
         >
           Premium Home Textiles, Canadian Made.
         </h1>

@@ -10,9 +10,9 @@ import { MobileMenu } from "./MobileMenu";
 import { SearchModal } from "./SearchModal";
 
 const announcements = [
-  { icon: Truck, text: "Free shipping on orders over $125 across Canada" },
-  { icon: RotateCcw, text: "Free 30-day returns on all unwashed items" },
-  { icon: Leaf, text: "Canadian-made with 25 years of textile expertise" },
+  { icon: Truck, text: "Free shipping over $125 across Canada" },
+  { icon: RotateCcw, text: "Free 30-day returns on unwashed items" },
+  { icon: Leaf, text: "25 years of Canadian textile expertise" },
 ];
 
 const navLinks = [
@@ -109,8 +109,8 @@ export function Navbar() {
                   fontWeight: 400,
                 }}
               >
-                <Icon size={12} className="text-[#F9F7F4]/50 shrink-0" />
-                <span className="text-[11px] tracking-[0.2em] uppercase text-[#F9F7F4]/70">
+                <Icon size={11} className="text-[#F9F7F4]/50 shrink-0" />
+                <span className="text-[10px] sm:text-[11px] tracking-[0.12em] sm:tracking-[0.2em] uppercase text-[#F9F7F4]/70 whitespace-nowrap">
                   {item.text}
                 </span>
               </div>

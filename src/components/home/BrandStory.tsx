@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function BrandStory() {
   return (
-    <section className="relative h-[400px] md:h-[460px] overflow-hidden">
+    <section className="relative h-[360px] sm:h-[400px] md:h-[460px] overflow-hidden">
       <Image
         src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=3840&q=100"
         alt="Khwab home textiles lifestyle"
@@ -34,7 +34,7 @@ export function BrandStory() {
           A Family Legacy, 25 Years in the Making
         </h2>
         <p
-          className="text-white/70 max-w-md mb-9"
+          className="text-white/70 max-w-md mb-7 sm:mb-9 hidden sm:block"
           style={{
             fontFamily: "var(--font-inter)",
             fontSize: "15px",

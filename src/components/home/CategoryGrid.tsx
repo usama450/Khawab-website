@@ -33,8 +33,8 @@ export async function CategoryGrid() {
     .sort((a, b) => (CATEGORY_META[a.slug]?.order ?? 99) - (CATEGORY_META[b.slug]?.order ?? 99));
 
   return (
-    <section className="py-12 lg:py-16 bg-white">
-      <div className="max-w-[1440px] mx-auto px-8 max-md:px-4">
+    <section className="py-10 sm:py-12 lg:py-16 bg-white">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
         {/* Heading */}
         <div className="text-center mb-8">
           <p
@@ -52,7 +52,7 @@ export async function CategoryGrid() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3">
           {categories.map((cat) => {
             const meta = CATEGORY_META[cat.slug];
             if (!meta) return null;
@@ -61,7 +61,7 @@ export async function CategoryGrid() {
               <Link
                 key={cat.slug}
                 href={`/shop/${cat.slug}`}
-                className="group relative aspect-[4/5] overflow-hidden block"
+                className="group relative aspect-[3/4] sm:aspect-[4/5] overflow-hidden block"
               >
                 <Image
                   src={meta.image}
@@ -69,18 +69,18 @@ export async function CategoryGrid() {
                   fill
                   quality={90}
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                  sizes="(max-width: 640px) 100vw, 33vw"
+                  sizes="(max-width: 640px) 34vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-2.5 sm:p-5">
                   <h3
-                    className="text-xl text-white mb-3 font-light"
-                    style={{ fontFamily: "var(--font-playfair)" }}
+                    className="text-white font-light leading-tight"
+                    style={{ fontFamily: "var(--font-playfair)", fontSize: "clamp(0.8rem, 2.5vw, 1.3rem)" }}
                   >
                     {meta.label}
                   </h3>
                   <span
-                    className="inline-block text-[10px] tracking-[0.2em] uppercase text-white/80 border-b border-white/40 pb-0.5 group-hover:text-white group-hover:border-white transition-all duration-300"
+                    className="hidden sm:inline-block mt-2 text-[10px] tracking-[0.2em] uppercase text-white/80 border-b border-white/40 pb-0.5 group-hover:text-white group-hover:border-white transition-all duration-300"
                     style={{ fontFamily: "var(--font-inter)" }}
                   >
                     Explore →

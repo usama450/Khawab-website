@@ -4,7 +4,7 @@ import { NewsletterForm } from "@/components/common/NewsletterForm";
 
 export function NewsletterSection() {
   return (
-    <section className="relative py-20 lg:py-28 overflow-hidden">
+    <section className="relative py-14 sm:py-20 lg:py-28 overflow-hidden">
       {/* Background image */}
       <Image
         src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=3840&q=100"
