@@ -40,7 +40,7 @@ export default function ShippingReturnsPage() {
           {
             title: "Damaged or Wrong Items",
             content: [
-              "If you receive a damaged or incorrect item, please email us at support@khwab.ca within 7 days of delivery with a photo. We'll make it right at no cost to you.",
+              "If you receive a damaged or incorrect item, please email us at admin@khawabhome.com within 7 days of delivery with a photo. We'll make it right at no cost to you.",
             ],
           },
         ].map((section) => (

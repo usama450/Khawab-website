@@ -165,7 +165,7 @@ async function sendOrderConfirmation(orderId: string) {
             </p>
           </div>
           <div style="background:#D4C5B0;padding:20px;text-align:center;color:#2A2A2A;font-size:12px">
-            <p>Questions? Email us at <a href="mailto:support@khwab.ca" style="color:#1A1410">support@khwab.ca</a></p>
+            <p>Questions? Email us at <a href="mailto:admin@khawabhome.com" style="color:#1A1410">admin@khawabhome.com</a></p>
             <p style="margin:4px 0 0">© ${new Date().getFullYear()} Khwab Home Textiles. Canadian Made.</p>
           </div>
         </div>

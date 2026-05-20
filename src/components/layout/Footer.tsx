@@ -80,7 +80,7 @@ export function Footer() {
                 </svg>
               </a>
               <a
-                href="mailto:hello@khwab.ca"
+                href="mailto:admin@khawabhome.com"
                 aria-label="Email Khwab"
                 className="w-9 h-9 border border-[#F9F7F4]/15 text-[#F9F7F4]/50 hover:text-[#F9F7F4] hover:border-[#F9F7F4]/40 flex items-center justify-center transition-colors duration-300"
               >
