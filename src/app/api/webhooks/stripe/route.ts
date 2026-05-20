@@ -37,7 +37,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
     const cartItems = JSON.parse(metadata.cartItems) as Array<{
       productId: string; variantId: string; qty: number;
       price: number; size: string; color: string;
-    }>();
+    }>;
 
     // Look up product names from DB since they're not in metadata
     const productIds = [...new Set(cartItems.map((i) => i.productId))];
