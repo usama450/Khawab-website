@@ -123,13 +123,27 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
 
 async function sendOrderConfirmation(orderId: string) {
   try {
-    const { resend, FROM_EMAIL } = await import("@/lib/resend");
+    const { resend, FROM_EMAIL, SUPPORT_EMAIL } = await import("@/lib/resend");
     const order = await prisma.order.findUnique({
       where: { id: orderId },
       include: { items: true, user: true },
     });
     if (!order || !order.user.email) return;
 
+    const shippingAddr = order.shippingAddress as {
+      fullName?: string; streetAddress?: string; addressLine2?: string;
+      city?: string; province?: string; postalCode?: string; country?: string;
+    } | null;
+
+    const itemsHtml = order.items.map((i) => `
+      <tr>
+        <td style="padding:10px 0;border-bottom:1px solid #E8E0D8;font-size:14px;color:#1A1410">${i.productName}${i.size ? ` — ${i.size}` : ""}${i.color ? ` / ${i.color}` : ""}</td>
+        <td style="padding:10px 0;border-bottom:1px solid #E8E0D8;font-size:14px;color:#1A1410;text-align:center">×${i.quantity}</td>
+        <td style="padding:10px 0;border-bottom:1px solid #E8E0D8;font-size:14px;color:#1A1410;text-align:right">$${(Number(i.priceAtPurchase) * i.quantity).toFixed(2)}</td>
+      </tr>
+    `).join("");
+
+    // 1. Send confirmation to customer
     await resend.emails.send({
       from: FROM_EMAIL,
       to: order.user.email,
@@ -146,12 +160,7 @@ async function sendOrderConfirmation(orderId: string) {
             <p>Your order <strong>${order.orderNumber}</strong> has been confirmed. We&apos;ll email you when it ships.</p>
             <div style="background:#FAF7F2;border-radius:12px;padding:20px;margin:24px 0">
               <h3 style="color:#1A1410;margin:0 0 12px;font-family:Georgia,serif">Order Summary</h3>
-              ${order.items.map((i) => `
-                <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F7F3EE">
-                  <span>${i.productName} × ${i.quantity}</span>
-                  <span>$${(Number(i.priceAtPurchase) * i.quantity).toFixed(2)}</span>
-                </div>
-              `).join("")}
+              <table width="100%" cellpadding="0" cellspacing="0">${itemsHtml}</table>
               <div style="display:flex;justify-content:space-between;padding:12px 0;font-weight:600;font-size:16px;color:#1A1410">
                 <span>Total</span>
                 <span>$${Number(order.total).toFixed(2)} CAD</span>
@@ -171,6 +180,64 @@ async function sendOrderConfirmation(orderId: string) {
         </div>
       `,
     });
+
+    // 2. Send admin notification to store owner
+    await resend.emails.send({
+      from: FROM_EMAIL,
+      to: SUPPORT_EMAIL,
+      subject: `🛍️ New Order ${order.orderNumber} — $${Number(order.total).toFixed(2)} CAD`,
+      html: `
+        <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1A1410;background:#F9F7F4;padding:32px">
+          <h2 style="font-family:Georgia,serif;margin:0 0 4px">New Order Received</h2>
+          <p style="margin:0 0 24px;color:#5A554F;font-size:14px">${new Date().toLocaleString("en-CA", { timeZone: "America/Toronto" })}</p>
+
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:white;border:1px solid #E2DDD7;margin-bottom:20px">
+            <tr style="background:#1A2B20">
+              <td colspan="3" style="padding:12px 16px;color:white;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;font-weight:600">
+                Order ${order.orderNumber}
+              </td>
+            </tr>
+            ${itemsHtml}
+            <tr>
+              <td colspan="2" style="padding:12px 16px;font-weight:600;font-size:15px">Total</td>
+              <td style="padding:12px 16px;font-weight:700;font-size:15px;text-align:right;color:#2C4A35">$${Number(order.total).toFixed(2)} CAD</td>
+            </tr>
+          </table>
+
+          <table width="100%" cellpadding="0" cellspacing="0" style="background:white;border:1px solid #E2DDD7;margin-bottom:20px">
+            <tr style="background:#F4F0EB">
+              <td colspan="2" style="padding:10px 16px;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;color:#5A554F">Customer</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 16px;font-size:14px;color:#5A554F;width:120px">Name</td>
+              <td style="padding:10px 16px;font-size:14px;color:#1A1410;font-weight:500">${order.user.name ?? "—"}</td>
+            </tr>
+            <tr style="background:#FAF7F2">
+              <td style="padding:10px 16px;font-size:14px;color:#5A554F">Email</td>
+              <td style="padding:10px 16px;font-size:14px;color:#1A1410">${order.user.email}</td>
+            </tr>
+            ${shippingAddr ? `
+            <tr>
+              <td style="padding:10px 16px;font-size:14px;color:#5A554F">Ship to</td>
+              <td style="padding:10px 16px;font-size:14px;color:#1A1410">
+                ${shippingAddr.fullName ?? ""}<br>
+                ${shippingAddr.streetAddress ?? ""}${shippingAddr.addressLine2 ? `, ${shippingAddr.addressLine2}` : ""}<br>
+                ${shippingAddr.city ?? ""}, ${shippingAddr.province ?? ""} ${shippingAddr.postalCode ?? ""}<br>
+                ${shippingAddr.country ?? "CA"}
+              </td>
+            </tr>` : ""}
+          </table>
+
+          <div style="text-align:center">
+            <a href="${process.env.NEXTAUTH_URL}/admin/orders"
+              style="display:inline-block;padding:12px 32px;background:#2C4A35;color:white;text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase">
+              View in Admin
+            </a>
+          </div>
+        </div>
+      `,
+    });
+
   } catch (error) {
     console.error("sendOrderConfirmation error:", error);
   }
