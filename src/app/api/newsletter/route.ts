@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
               <!-- Code box -->
               <div style="background:#F5EFE5;border:2px dashed #C9A961;border-radius:8px;padding:24px;text-align:center;margin:0 0 24px;">
                 <p style="margin:0 0 8px;font-size:12px;color:#8B8B8B;letter-spacing:0.2em;text-transform:uppercase;">Your discount code</p>
-                <p style="margin:0;font-size:28px;font-weight:700;color:#5A189A;letter-spacing:0.25em;font-family:Georgia,'Times New Roman',serif;">${code}</p>
+                <p style="margin:0;font-size:28px;font-weight:700;color:#2C4A35;letter-spacing:0.25em;font-family:Georgia,'Times New Roman',serif;">${code}</p>
               </div>
 
               <p style="font-size:13px;color:#8B8B8B;font-weight:300;line-height:1.5;margin:0 0 28px;text-align:center;">
@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
               <!-- CTA button -->
               <div style="text-align:center;">
                 <a href="${shopUrl}"
-                  style="display:inline-block;background:#5A189A;color:#F8F4EE;text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:14px 36px;border-radius:4px;border:1px solid rgba(231,211,168,0.3);">
+                  style="display:inline-block;background:#2C4A35;color:#F9F7F4;text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:14px 36px;border-radius:4px;">
                   Shop Now
                 </a>
               </div>
