@@ -33,10 +33,19 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
     const metadata = session.metadata;
     if (!metadata?.cartItems) return;
 
+    // Metadata uses short keys (qty) to stay under Stripe's 500-char limit
     const cartItems = JSON.parse(metadata.cartItems) as Array<{
-      productId: string; variantId: string; quantity: number;
-      price: number; name: string; image: string; size: string; color: string;
-    }>;
+      productId: string; variantId: string; qty: number;
+      price: number; size: string; color: string;
+    }>();
+
+    // Look up product names from DB since they're not in metadata
+    const productIds = [...new Set(cartItems.map((i) => i.productId))];
+    const products = await prisma.product.findMany({
+      where: { id: { in: productIds } },
+      select: { id: true, name: true, images: { take: 1, orderBy: { displayOrder: "asc" }, select: { imageUrl: true } } },
+    });
+    const productMap = Object.fromEntries(products.map((p) => [p.id, p]));
 
     // shipping_details is available on checkout sessions
   const shippingAddress = (session as unknown as { shipping_details?: { name?: string; address?: { line1?: string; line2?: string; city?: string; state?: string; postal_code?: string; country?: string } } }).shipping_details;
@@ -87,11 +96,11 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
           create: cartItems.map((item) => ({
             productVariantId: item.variantId !== item.productId ? item.variantId : null,
             productId: item.productId,
-            productName: item.name,
-            productImage: item.image,
+            productName: productMap[item.productId]?.name ?? "Unknown Product",
+            productImage: productMap[item.productId]?.images[0]?.imageUrl ?? null,
             size: item.size || null,
             color: item.color || null,
-            quantity: item.quantity,
+            quantity: item.qty,
             priceAtPurchase: item.price,
           })),
         },
@@ -103,7 +112,7 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
       if (item.variantId !== item.productId) {
         await prisma.productVariant.updateMany({
           where: { id: item.variantId },
-          data: { stockQuantity: { decrement: item.quantity } },
+          data: { stockQuantity: { decrement: item.qty } },
         });
       }
     }
