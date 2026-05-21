@@ -63,12 +63,18 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
     const userId = metadata.userId;
     let resolvedUserId = userId;
 
-    if (userId === "guest" && session.customer_email) {
-      const existing = await prisma.user.findUnique({ where: { email: session.customer_email } });
+    // customer_email = pre-filled (logged-in users)
+    // customer_details.email = what guest typed in Stripe's form
+    const customerEmail =
+      (session as unknown as { customer_details?: { email?: string } }).customer_details?.email
+      ?? session.customer_email;
+
+    if (userId === "guest" && customerEmail) {
+      const existing = await prisma.user.findUnique({ where: { email: customerEmail } });
       if (existing) resolvedUserId = existing.id;
       else {
         const newUser = await prisma.user.create({
-          data: { email: session.customer_email, name: shippingAddress?.name ?? null },
+          data: { email: customerEmail, name: shippingAddress?.name ?? null },
         });
         resolvedUserId = newUser.id;
       }
