@@ -142,7 +142,10 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
     await sendOrderConfirmation(order.id);
 
   } catch (error) {
-    console.error("handleCheckoutComplete error:", error);
+    const msg = error instanceof Error ? error.message : String(error);
+    const stack = error instanceof Error ? error.stack : "";
+    console.error("WEBHOOK_ERROR:", msg);
+    console.error("WEBHOOK_STACK:", stack);
   }
 }
 
