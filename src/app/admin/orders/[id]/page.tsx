@@ -61,7 +61,7 @@ export default async function AdminOrderDetailPage({ params }: Props) {
               {new Date(order.createdAt).toLocaleDateString("en-CA", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}
             </p>
           </div>
-          <AdminOrderActions orderId={order.id} currentStatus={order.status} statusColors={statusColors} />
+          <AdminOrderActions orderId={order.id} currentStatus={order.status} currentTrackingNumber={order.trackingNumber} statusColors={statusColors} />
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
@@ -158,6 +158,17 @@ export default async function AdminOrderDetailPage({ params }: Props) {
                   <p>{addr.city}, {addr.province} {addr.postalCode}</p>
                   <p>{addr.country}</p>
                 </div>
+                {order.trackingNumber && (
+                  <div className="mt-3 pt-3 border-t border-[#F7F3EE]">
+                    <p className="text-xs font-inter font-normal text-[#8B8B8B] uppercase tracking-wider mb-1">Tracking</p>
+                    <p className="text-sm font-inter font-normal text-[#2C4A35]">{order.trackingNumber}</p>
+                    {order.shippedAt && (
+                      <p className="text-xs font-inter font-light text-[#8B8B8B] mt-0.5">
+                        Shipped {new Date(order.shippedAt).toLocaleDateString("en-CA", { month: "short", day: "numeric", year: "numeric" })}
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
             )}
 

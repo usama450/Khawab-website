@@ -144,14 +144,34 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
       await prisma.cart.deleteMany({ where: { userId: resolvedUserId } });
     }
 
-    // Send confirmation email
+    // Send confirmation email + phone notification
     await sendOrderConfirmation(order.id);
+    await sendPhoneNotification(order.orderNumber, total, cartItems.length);
 
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);
     const stack = error instanceof Error ? error.stack : "";
     console.error("WEBHOOK_ERROR:", msg);
     console.error("WEBHOOK_STACK:", stack);
+  }
+}
+
+async function sendPhoneNotification(orderNumber: string, total: number, itemCount: number) {
+  const topic = process.env.NTFY_TOPIC;
+  if (!topic) return; // Silently skip if not configured
+  try {
+    await fetch(`https://ntfy.sh/${topic}`, {
+      method: "POST",
+      headers: {
+        "Title": `🛍️ New Order ${orderNumber}`,
+        "Priority": "high",
+        "Tags": "shopping,money_with_wings",
+        "Content-Type": "text/plain",
+      },
+      body: `$${total.toFixed(2)} CAD · ${itemCount} item${itemCount !== 1 ? "s" : ""}`,
+    });
+  } catch (err) {
+    console.error("ntfy notification error:", err);
   }
 }
 

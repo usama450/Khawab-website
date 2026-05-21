@@ -4,7 +4,16 @@
       "Bash(gh repo *)",
       "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-git)",
       "Bash(mkdir -p old_files)",
-      "Bash(mv hero-bg.png hero.mp4 index.html plumber.png section.mp4 thank-you.html old_files/)"
+      "Bash(mv hero-bg.png hero.mp4 index.html plumber.png section.mp4 thank-you.html old_files/)",
+      "Bash(awk '{print $2}')",
+      "mcp__81e8002c-db3f-40c0-ad17-60f96e180467__list_projects",
+      "mcp__81e8002c-db3f-40c0-ad17-60f96e180467__list_deployments",
+      "Bash(npx vercel *)",
+      "mcp__81e8002c-db3f-40c0-ad17-60f96e180467__get_runtime_logs",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git commit *)"
     ]
   }
 }
