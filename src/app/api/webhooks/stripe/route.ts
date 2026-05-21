@@ -39,11 +39,16 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
       price: number; size: string; color: string;
     }>;
 
-    // Look up product names from DB since they're not in metadata
+    // Look up product names and real variant IDs from DB
     const productIds = [...new Set(cartItems.map((i) => i.productId))];
     const products = await prisma.product.findMany({
       where: { id: { in: productIds } },
-      select: { id: true, name: true, images: { take: 1, orderBy: { displayOrder: "asc" }, select: { imageUrl: true } } },
+      select: {
+        id: true,
+        name: true,
+        images: { take: 1, orderBy: { displayOrder: "asc" }, select: { imageUrl: true } },
+        variants: { select: { id: true, size: true, color: true } },
+      },
     });
     const productMap = Object.fromEntries(products.map((p) => [p.id, p]));
 
@@ -93,25 +98,36 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session) {
           country: shippingAddress?.address?.country ?? "CA",
         },
         items: {
-          create: cartItems.map((item) => ({
-            productVariantId: item.variantId !== item.productId ? item.variantId : null,
-            productId: item.productId,
-            productName: productMap[item.productId]?.name ?? "Unknown Product",
-            productImage: productMap[item.productId]?.images[0]?.imageUrl ?? null,
-            size: item.size || null,
-            color: item.color || null,
-            quantity: item.qty,
-            priceAtPurchase: item.price,
-          })),
+          create: cartItems.map((item) => {
+            // Find the real DB variant ID by matching size+color
+            const variants = productMap[item.productId]?.variants ?? [];
+            const realVariant = variants.find(
+              (v) => v.size === (item.size || null) && v.color === (item.color || null)
+            ) ?? variants[0] ?? null;
+            return {
+              productVariantId: realVariant?.id ?? null,
+              productId: item.productId,
+              productName: productMap[item.productId]?.name ?? "Unknown Product",
+              productImage: productMap[item.productId]?.images[0]?.imageUrl ?? null,
+              size: item.size || null,
+              color: item.color || null,
+              quantity: item.qty,
+              priceAtPurchase: item.price,
+            };
+          }),
         },
       },
     });
 
-    // Decrement stock
+    // Decrement stock using real variant IDs
     for (const item of cartItems) {
-      if (item.variantId !== item.productId) {
-        await prisma.productVariant.updateMany({
-          where: { id: item.variantId },
+      const variants = productMap[item.productId]?.variants ?? [];
+      const realVariant = variants.find(
+        (v) => v.size === (item.size || null) && v.color === (item.color || null)
+      ) ?? variants[0] ?? null;
+      if (realVariant) {
+        await prisma.productVariant.update({
+          where: { id: realVariant.id },
           data: { stockQuantity: { decrement: item.qty } },
         });
       }
